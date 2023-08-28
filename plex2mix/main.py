@@ -182,10 +182,7 @@ def download(ctx, force=False) -> None:
             pathFile = os.path.join(path, file)
             if pathFile not in downloadedTracks:
                 os.remove(pathFile)
-                files.remove(file)
-
-        if len(directories) == 0 and len(files) == 0:
-            os.rmdir(path)
+    remove_empty_folders(configPath)
 
 @ cli.command()
 @ click.argument('indices',  nargs=-1, type=int)
@@ -219,3 +216,8 @@ def config(ctx):
     """Show config"""
     click.echo(f"Configuration file is located at {ctx.obj['config_file']}")
     click.echo(ctx.obj["config"])
+
+def remove_empty_folders(path_abs):
+    for path, _, _ in os.walk(path_abs, topdown=False):
+        if len(os.listdir(path)) == 0:
+            os.rmdir(path)
