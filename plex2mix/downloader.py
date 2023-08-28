@@ -37,9 +37,21 @@ class Downloader:
         return filepath
 
     def __path(self, track: Track) -> tuple:
-        artist, album = track.grandparentTitle, track.parentTitle
-        album_path = os.path.join(self.path, artist, album)
-        _, file = os.path.split(track.media[0].parts[0].file)
+        librairy = self.server.library.sectionByID(track.librarySectionID)
+        directory, file = os.path.split(track.media[0].parts[0].file)
+
+        # Remove library path in directory path
+        for location in librairy.locations:
+            if directory.startswith(location):
+                directory = directory.lstrip(location)
+                break
+
+        # Fix OS separators
+        album_path = ''
+        for part in directory.split('/'):
+            album_path = os.path.join(album_path, part)
+
+        album_path = os.path.join(self.path, album_path)
         filepath = os.path.join(album_path, file)
         return album_path, filepath
 
