@@ -183,7 +183,18 @@ def refresh(ctx, force=False) -> None:
             with click.progressbar(as_completed(t), length=len(t), label=p.title) as bar:
                 for _ in bar:
                     pass
+    # clean tracks without playlists
+    configPath = ctx.obj["config"]["path"]
+    downloadedTracks = downloader.downloadedTracks
+    for (path, directories, files) in os.walk(configPath):
+        for file in files:
+            pathFile = os.path.join(path, file)
+            if pathFile not in downloadedTracks:
+                os.remove(pathFile)
+                files.remove(file)
 
+        if len(directories) == 0 and len(files) == 0:
+            os.rmdir(path)
 
 @ cli.command()
 @ click.argument('indices',  nargs=-1, type=int)

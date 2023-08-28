@@ -13,6 +13,7 @@ class Downloader:
         self.path = os.path.expanduser(os.path.join(path))
         self.playlists_path = os.path.expanduser(os.path.join(playlists_path))
         self.pool = ThreadPoolExecutor(max_workers=threads)
+        self.downloadedTracks = []
 
     def get_playlists(self) -> list:
         if self.playlists is None:
@@ -34,24 +35,14 @@ class Downloader:
         else:
             track.download(album_path, keep_original_name=True)
 
+        self.downloadedTracks.append(filepath)
+
         return filepath
 
     def __path(self, track: Track) -> tuple:
-        librairy = self.server.library.sectionByID(track.librarySectionID)
-        directory, file = os.path.split(track.media[0].parts[0].file)
-
-        # Remove library path in directory path
-        for location in librairy.locations:
-            if directory.startswith(location):
-                directory = directory.lstrip(location)
-                break
-
-        # Fix OS separators
-        album_path = ''
-        for part in directory.split('/'):
-            album_path = os.path.join(album_path, part)
-
-        album_path = os.path.join(self.path, album_path)
+        artist, album = track.grandparentTitle, track.parentTitle
+        album_path = os.path.join(self.path, artist, album)
+        _, file = os.path.split(track.media[0].parts[0].file)
         filepath = os.path.join(album_path, file)
         return album_path, filepath
 
