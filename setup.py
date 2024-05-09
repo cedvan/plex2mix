@@ -2,12 +2,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='plex2mix',
-    version='0.1.0',
+    version='1.0.1',
     packages=find_packages(),
     description='Python cli utility to download Plex playlists.',
-    author='Anatosun',
-    author_email='z4jyol8l@duck.com',
-    url='https://github.com/anatosun/plex2mix',
+    author='Cedvan',
+    author_email='contact@cedvan.com',
+    url='https://github.com/cedvan/plex2mix',
     include_package_data=True,
     install_requires=[
         'Click',
