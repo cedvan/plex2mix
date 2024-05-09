@@ -28,11 +28,7 @@ class Downloader:
     def __download_track(self, track: Track,  overwrite=False) -> str:
         album_path, filepath = self.get_path(track)
         size_on_server = track.media[0].parts[0].size
-        if os.path.exists(filepath):
-            while overwrite or size_on_server > os.path.getsize(filepath):
-                track.download(album_path, keep_original_name=True)
-                overwrite = False
-        else:
+        if not os.path.exists(filepath) or overwrite:
             track.download(album_path, keep_original_name=True)
 
         self.downloadedTracks.append(filepath)
