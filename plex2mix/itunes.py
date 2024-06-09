@@ -70,7 +70,7 @@ class Itunes:
 
             _, trackLocation = self.downloader.get_path(track)
             ET.SubElement(trackElement, 'key').text = "Location"
-            ET.SubElement(trackElement, 'string').text = pathlib.Path(trackLocation).as_uri()
+            ET.SubElement(trackElement, 'string').text = pathlib.Path(trackLocation).as_uri().replace('file:///C:', 'file://localhost/C:')
 
 
         # Dump playlists
