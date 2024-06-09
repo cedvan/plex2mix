@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='plex2mix',
-    version='1.0.1',
+    version='1.1.0',
     packages=find_packages(),
     description='Python cli utility to download Plex playlists.',
     author='Cedvan',
