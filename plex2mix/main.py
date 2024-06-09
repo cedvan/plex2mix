@@ -74,6 +74,12 @@ def cli(ctx) -> None:
         ctx.obj["save"]()
     os.makedirs(ctx.obj["config"]["playlists_path"], exist_ok=True)
 
+    if ctx.obj["config"].get("itunes_path") is None:
+        itunes_path = os.path.join(path, "itunes")
+        ctx.obj["config"]["itunes_path"] = itunes_path
+        ctx.obj["save"]()
+    os.makedirs(ctx.obj["config"]["itunes_path"], exist_ok=True)
+
     ctx.obj["downloader"] = Downloader(
         ctx.obj["server"], ctx.obj["config"]["path"], ctx.obj["config"]["playlists_path"], ctx.obj["config"]["threads"])
     ctx.obj["itunes"] = Itunes(
