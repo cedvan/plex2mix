@@ -7,12 +7,12 @@ from plexapi.audio import Track
 from plex2mix.downloader import Downloader
 
 class Itunes:
-    def __init__(self, downloader: Downloader, serverUrl: str, path: str, playlists_path: str, playlists_saved) -> None:
+    def __init__(self, downloader: Downloader, serverUrl: str, path: str, itunes_path: str, playlists_saved) -> None:
 
         self.downloader = downloader
         self.serverUrl = serverUrl
         self.path = path
-        self.playlists_path = os.path.expanduser(os.path.join(playlists_path))
+        self.itunes_path = os.path.expanduser(os.path.join(itunes_path))
         self.playlists_saved = playlists_saved
         self.filename = 'iTunes Music Library.xml'
 
@@ -103,7 +103,7 @@ class Itunes:
                 playlistId = playlistId + 1
 
 
-        itunes_xml_path = os.path.join(self.playlists_path, self.filename)
+        itunes_xml_path = os.path.join(self.itunes_path, self.filename)
         with open(itunes_xml_path, 'wb') as f:
             f.write('<?xml version="1.0" encoding="UTF-8" ?>'.encode('utf8'))
             f.write('<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">'.encode('utf8'))

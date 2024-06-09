@@ -77,7 +77,7 @@ def cli(ctx) -> None:
     ctx.obj["downloader"] = Downloader(
         ctx.obj["server"], ctx.obj["config"]["path"], ctx.obj["config"]["playlists_path"], ctx.obj["config"]["threads"])
     ctx.obj["itunes"] = Itunes(
-        ctx.obj["downloader"], ctx.obj["config"]["server"]["url"], ctx.obj["config"]["path"], ctx.obj["config"]["playlists_path"], ctx.obj["config"]["playlists"]["saved"])
+        ctx.obj["downloader"], ctx.obj["config"]["server"]["url"], ctx.obj["config"]["path"], ctx.obj["config"]["itunes_path"], ctx.obj["config"]["playlists"]["saved"])
 
 def login(token="") -> PlexServer:
     """Login to Plex"""
